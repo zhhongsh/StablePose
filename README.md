@@ -27,20 +27,32 @@ To train StablePose on T-LESS or LM-O dataset, run
 python train.py -tless
 ```
 or 
-```train.py -lmo```
+```
+train.py -lmo
+```
 
 To train StablePose on ShapeNet dataset, run 
-```python train_shapenet.py```
+```
+python train_shapenet.py
+```
 
 To train StablePose on NOCS-REAL275 dataset, run 
-```python train_nocs.py```
+```
+python train_nocs.py
+```
 
 To test StablePose on T-LESS dataset, run 
-```python test_tless.py``` 
+```
+python test_tless.py
+``` 
 To test/evaluate StablePose on ShapeNet dataset, run 
-```python test_shapenet.py```   
+```
+python test_shapenet.py
+```   
 To test/evaluate StablePose on NOCS-REAL275 dataset, run 
-```python test_nocs.py```
+```
+python test_nocs.py
+```
 
 
 To evaluate instace-level datasets: T-LESS and Linemod, use the code here https://github.com/thodan/bop_toolkit.  
