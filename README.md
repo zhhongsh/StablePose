@@ -2,8 +2,8 @@
 
 This repository includes:  
 * lib: the core Python library for networks and loss  
-  ** lib/loss_*dataset.py: symmetrynet loss caculation for respective dataset 
-  ** lib/network_*dataset.py: network architecture for the respective dataset 
+  ** lib/loss_*dataset.py: symmetrynet loss caculation for respective dataset  
+  ** lib/network_*dataset.py: network architecture for the respective dataset  
 
 * datasets: the dataloader and training/testing lists  
   ** datasets/tless/dataset.py: the training dataloader for tless dataset  
