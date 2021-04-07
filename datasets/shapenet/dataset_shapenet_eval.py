@@ -247,7 +247,7 @@ class PoseDataset(data.Dataset):
         num_patch = np.max(patches)
         num_list = []
         patch_list = patches.reshape(-1).tolist()
-        for n in range(1, num_patch + 1):  # ordered num of point in each patch(from patch_1 to patch_n)
+        for n in range(1, num_patch + 1):  # ordered num of point in each tless(from patch_1 to patch_n)
             num = str(patch_list).count(str(n))
             num_list.append(num)
 

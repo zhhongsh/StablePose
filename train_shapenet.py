@@ -13,7 +13,7 @@ import torch.optim as optim
 import torch.utils.data
 from torch.autograd import Variable
 from datasets.shapenet.dataset_shapenet import PoseDataset as PoseDataset_ycb
-from datasets.linemod.dataset import PoseDataset as PoseDataset_linemod
+from datasets.linemod.dataset_lmo import PoseDataset as PoseDataset_linemod
 from lib.network_noid import PatchNet
 from lib.loss_noid import Loss
 from lib.loss_refiner import Loss_refine
@@ -21,10 +21,10 @@ from lib.utils import setup_logger
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--dataset', type=str, default='tless', help='tless or linemod')
-parser.add_argument('--dataset_root', type=str, default='/home/lthpc/yifeis/symmetry_pose_mount/render/render_dy/render_wt_pt_proj/data/syn_images_20views1',
+parser.add_argument('--dataset_root', type=str, default='/home/lthpc/yifeis/symmetry_pose_mount/rgbd',
                     help='dataset root dir (''YCB_Video_Dataset'' or ''Linemod_preprocessed'')')
 parser.add_argument('--batch_size', type=int, default=16, help='batch size')
-parser.add_argument('--workers', type=int, default=64, help='number of data loading workers')
+parser.add_argument('--workers', type=int, default=0, help='number of data loading workers')
 parser.add_argument('--lr', default=0.0001, help='learning rate')
 parser.add_argument('--lr_rate', default=0.3, help='learning rate decay rate')
 parser.add_argument('--w', default=0.015, help='learning rate')
@@ -66,7 +66,8 @@ def main():
         return
 
     # torch.distributed.init_process_group(backend='nccl', init_method='tcp://localhost:23456', rank=0, world_size=1)
-    estimator = PatchNet(num_obj=opt.num_objects)
+    estimator = PatchNet()
+    # estimator = PatchNet(num_obj=opt.num_objects)
     # estimator = torch.nn.DataParallel(estimator)
     estimator = estimator.cuda()
     # estimator = torch.nn.parallel.DistributedDataParallel(estimator,find_unused_parameters=True)
@@ -77,20 +78,20 @@ def main():
         p.numel() for p in estimator.parameters() if p.requires_grad)
     print(f'{total_trainable_params:,} training parameters.')
     # print(estimator)
-    refiner = PoseRefineNet(num_points=opt.num_points, num_obj=opt.num_objects)
-    refiner.cuda()
+    # refiner = PoseRefineNet(num_points=opt.num_points, num_obj=opt.num_objects)
+    # refiner.cuda()
     # utils.print_network(estimator)
     if opt.resume_posenet != '':
         estimator.load_state_dict(torch.load('{0}/{1}'.format(opt.outf, opt.resume_posenet)))
 
     if opt.resume_refinenet != '':
-        refiner.load_state_dict(torch.load('{0}/{1}'.format(opt.outf, opt.resume_refinenet)))
+        # refiner.load_state_dict(torch.load('{0}/{1}'.format(opt.outf, opt.resume_refinenet)))
         opt.refine_start = False  # True
         opt.decay_start = True
         opt.lr *= opt.lr_rate
         opt.w *= opt.w_rate
         opt.batch_size = int(opt.batch_size / opt.iteration)
-        optimizer = optim.Adam(refiner.parameters(), lr=opt.lr)
+        # optimizer = optim.Adam(refiner.parameters(), lr=opt.lr)
     else:
         opt.refine_start = False
         opt.decay_start = False
@@ -137,7 +138,7 @@ def main():
 
         if opt.refine_start:
             estimator.eval()
-            refiner.train()
+            # refiner.train()
         else:
             estimator.train()
         optimizer.zero_grad()
@@ -182,7 +183,8 @@ def main():
 
                 if train_count != 0 and train_count % 1000 == 0:
                     if opt.refine_start:
-                        torch.save(refiner.state_dict(), '{0}/pose_refine_model_current.pth'.format(opt.outf))
+                        kk=1
+                        # torch.save(refiner.state_dict(), '{0}/pose_refine_model_current.pth'.format(opt.outf))
                     else:
                         torch.save(estimator.state_dict(), '{0}/pose_model_current.pth'.format(opt.outf))
 
@@ -196,7 +198,7 @@ def main():
         test_norm = 0.0
         test_count = 0
         estimator.eval()
-        refiner.eval()
+        # refiner.eval()
 
         for j, data in enumerate(testdataloader, 0):
             points, target_rt, choose_patchs, target_pt, model_points, target_mode, target_s = data
@@ -231,12 +233,13 @@ def main():
         test_dis = test_dis / test_count
         test_norm = test_norm / test_count
         test_patch = test_patch / test_count
-        logger.info('Test time {0} Epoch {1} TEST FINISH Avg dis: {2} avg norm: {3} avg patch: {4}'.format(
+        logger.info('Test time {0} Epoch {1} TEST FINISH Avg dis: {2} avg norm: {3} avg tless: {4}'.format(
             time.strftime("%Hh %Mm %Ss", time.gmtime(time.time() - st_time)), epoch, test_dis, test_norm, test_patch))
         if test_dis <= best_test:
             best_test = test_dis
             if opt.refine_start:
-                torch.save(refiner.state_dict(), '{0}/pose_refine_model_{1}_{2}.pth'.format(opt.outf, epoch, test_dis))
+                kk=1
+                # torch.save(refiner.state_dict(), '{0}/pose_refine_model_{1}_{2}.pth'.format(opt.outf, epoch, test_dis))
             else:
                 torch.save(estimator.state_dict(), '{0}/pose_model_{1}_{2}.pth'.format(opt.outf, epoch, test_dis))
             print(epoch, '>>>>>>>>----------BEST TEST MODEL SAVED---------<<<<<<<<')
@@ -250,7 +253,7 @@ def main():
         if best_test < opt.refine_margin and not opt.refine_start:
             opt.refine_start = True
             opt.batch_size = int(opt.batch_size / opt.iteration)
-            optimizer = optim.Adam(refiner.parameters(), lr=opt.lr)
+            # optimizer = optim.Adam(refiner.parameters(), lr=opt.lr)
 
             if opt.dataset == 'ycb':
                 dataset = PoseDataset_ycb('train', opt.num_points, True, opt.dataset_root, opt.noise_trans,

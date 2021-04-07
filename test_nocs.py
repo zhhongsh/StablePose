@@ -13,7 +13,7 @@ import torch.optim as optim
 import torch.utils.data
 from torch.autograd import Variable
 from datasets.nocs.dataset_nocs_eval import Dataset
-from datasets.linemod.dataset import PoseDataset as PoseDataset_linemod
+from datasets.linemod.dataset_lmo import PoseDataset as PoseDataset_linemod
 from lib.network_nocs_nonorm import PatchNet
 from lib.loss_nocs import Loss
 from lib.loss_refiner import Loss_refine

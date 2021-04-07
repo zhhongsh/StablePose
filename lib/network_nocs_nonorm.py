@@ -4,7 +4,6 @@ import torch.nn.parallel
 import torch.utils.data
 from lib.pointnet2_utils import PointNetSetAbstractionMsg, PointNetSetAbstraction
 import torch.nn.functional as F
-from lib.pspnet_patchfusion import PSPNet
 torch.backends.cudnn.enabled = False
 
 class PatchFeat(nn.Module):

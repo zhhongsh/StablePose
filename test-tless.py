@@ -12,7 +12,7 @@ import numpy as np
 import torch
 import sys
 
-sys.path.append('/home/lthpc/yifeis/pose/pose_est_tless_3d/')
+sys.path.append('/home/lthpc/yifeis/pose/StablePose/')
 import torch.nn as nn
 import torch.nn.parallel
 import torch.backends.cudnn as cudnn
@@ -22,8 +22,8 @@ import torchvision.datasets as dset
 import torchvision.transforms as transforms
 import torchvision.utils as vutils
 from torch.autograd import Variable
-from datasets.patch.dataset_patch_stable import PoseDataset as PoseDataset_ycb
-from datasets.linemod.dataset import PoseDataset as PoseDataset_linemod
+from datasets.tless.dataset_patch_stable import PoseDataset as PoseDataset_ycb
+from datasets.linemod.dataset_lmo import PoseDataset as PoseDataset_linemod
 from lib.network_point import PatchNet, PoseRefineNet
 from lib.loss_rl2_os import Loss
 from lib.loss_refiner import Loss_refine
@@ -56,7 +56,7 @@ opt = parser.parse_args()
 os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 # CUDA_LAUNCH_BLOCKING=1
 # proj_dir='/home/lthpc/yifeis/pose_mount/pose_est_tless_3d/'
-proj_dir = '/home/lthpc/yifeis/pose/pose_est_tless_3d/'
+proj_dir = '/home/lthpc/yifeis/pose/StablePose/'
 
 # proj_dir = '/home/demian/pose_est_tless/'
 def main():

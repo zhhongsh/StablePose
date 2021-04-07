@@ -13,15 +13,15 @@ import torch.optim as optim
 import torch.utils.data
 from torch.autograd import Variable
 from datasets.nocs.dataset_nocs import Dataset
-from datasets.linemod.dataset import PoseDataset as PoseDataset_linemod
+from datasets.linemod.dataset_lmo import PoseDataset as PoseDataset_linemod
 from lib.network_nocs_nonorm import PatchNet
 from lib.loss_nocs import Loss
-from lib.loss_refiner import Loss_refine
+# from lib.loss_refiner import Loss_refine
 from lib.utils import setup_logger
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--dataset', type=str, default='nocs', help='tless or linemod')
-parser.add_argument('--dataset_root', type=str, default='/data/yifeis/pose/NOCS/NOCS-REAL275-additional/',
+parser.add_argument('--dataset_root', type=str, default='/data2/yifeis/pose/NOCS/NOCS-REAL275-additional/',
                     help='dataset root dir (''YCB_Video_Dataset'' or ''Linemod_preprocessed'')')
 parser.add_argument('--batch_size', type=int, default=8, help='batch size')
 parser.add_argument('--workers', type=int, default=32, help='number of data loading workers')
@@ -191,7 +191,7 @@ def main():
         test_dis = test_dis / test_count
         test_norm = test_norm / test_count
         test_patch = test_patch / test_count
-        logger.info('Test time {0} Epoch {1} TEST FINISH Avg dis: {2} avg norm: {3} avg patch: {4}'.format(
+        logger.info('Test time {0} Epoch {1} TEST FINISH Avg dis: {2} avg norm: {3} avg tless: {4}'.format(
             time.strftime("%Hh %Mm %Ss", time.gmtime(time.time() - st_time)), epoch, test_dis, test_norm, test_patch))
         if test_dis <= best_test:
             best_test = test_dis
@@ -223,7 +223,7 @@ def main():
                     len(dataset), len(test_dataset), opt.num_points_mesh))
 
             criterion = Loss(opt.num_points_mesh)
-            criterion_refine = Loss_refine(opt.num_points_mesh)
+            # criterion_refine = Loss_refine(opt.num_points_mesh)
 
 def displayPoint(data,target,view,title):
     # 解决中文显示问题

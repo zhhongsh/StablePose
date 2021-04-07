@@ -125,7 +125,7 @@ class PoseDataset(data.Dataset):
                 class_name = self.class_id[class_key]
                 instance_ls = self.name_list[cls_idx][1:-1].split(",")
                 ins_name = instance_ls[ins_num][2:-1]
-                sym_dir = '/home/lthpc/yifeis/shapenet_mount/'
+                sym_dir = '/home/lthpc/yifeis/shapenetcore/'
                 sym_file = sym_dir + class_name + '/' + ins_name + '/' + 'model_sym.txt'
                 if os.path.exists(sym_file) == False:
                     index += 1
@@ -248,7 +248,7 @@ class PoseDataset(data.Dataset):
         num_patch = np.max(patches)
         num_list = []
         patch_list = patches.reshape(-1).tolist()
-        for n in range(1, num_patch + 1):  # ordered num of point in each patch(from patch_1 to patch_n)
+        for n in range(1, num_patch + 1):  # ordered num of point in each tless(from patch_1 to patch_n)
             num = str(patch_list).count(str(n))
             num_list.append(num)
 

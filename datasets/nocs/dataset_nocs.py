@@ -73,17 +73,6 @@ class Dataset(data.Dataset):
                     self.real_obj_list[tmp_cate_id][item].append('{0}/data_ls/{1}'.format(self.root, input_line))
                 input_file.close()
 
-        # self.back_list = []
-        #
-        # input_file = open('dataset/train2017.txt', 'r')
-        # while 1:
-        #     input_line = input_file.readline()
-        #     if not input_line:
-        #         break
-        #     if input_line[-1:] == '\n':
-        #         input_line = input_line[:-1]
-        #     self.back_list.append(self.back_root + input_line)
-        # input_file.close()
 
         self.mesh = []
         input_file = open('/home/lthpc/yifeis/pose/pose_est_tless_3d/datasets/nocs/sphere.xyz', 'r')
@@ -372,21 +361,8 @@ class Dataset(data.Dataset):
         pt1 = (xmap_masked - cam_cy) * pt2 / cam_fy
         cloud = np.concatenate((-pt0, -pt1, pt2), axis=1)
 
-        # pts = pts_clear[choose]
-        # cloud = pts_ori_clear[choose]
-        # patch_masked = patch_label[choose]
-        # pcd = o3d.geometry.PointCloud()
-        # pcd.points = o3d.utility.Vector3dVector(pts)
-        # pcd_clear, _ = pcd.remove_radius_outlier(nb_points=500, radius=0.1)
-        # pts_clear = np.asarray(pcd_clear.points)
-        #
-        # pcd = o3d.geometry.PointCloud()
-        # pcd.points = o3d.utility.Vector3dVector(pts_ori / 1000)
-        # pcd_clear, _ = pcd.remove_radius_outlier(nb_points=500, radius=0.1)
-        # pts_ori_clear = np.asarray(pcd_clear.points)
-
         # np.savetxt('/home/lthpc/yifeis/pose/pose_est_tless_3d/datasets/nocs/test/pts.txt', pts)
-        np.savetxt('/home/lthpc/yifeis/pose/pose_est_tless_3d/datasets/nocs/test/pts_ori.txt', cloud)
+        # np.savetxt('/home/lthpc/yifeis/pose/pose_est_tless_3d/datasets/nocs/test/pts_ori.txt', cloud)
 
         # get the mesh of normalized model
         mesh_path = '{0}/obj_models/real_{1}/{2}.obj'.format(self.root, self.mode, choose_obj)
@@ -397,7 +373,7 @@ class Dataset(data.Dataset):
         mesh = sample_points_from_meshes(model_mesh, 2000)
         target = np.dot(mesh[0], target_r.T) + translation
         # np.savetxt('/home/lthpc/yifeis/pose/pose_est_tless_3d/datasets/nocs/test/mesh.txt', mesh[0])
-        np.savetxt('/home/lthpc/yifeis/pose/pose_est_tless_3d/datasets/nocs/test/mesh_trans.txt', target)
+        # np.savetxt('/home/lthpc/yifeis/pose/pose_est_tless_3d/datasets/nocs/test/mesh_trans.txt', target)
 
         # get the bbox of model
         # input_file = '{0}/obj_models/real_{1}/{2}.txt'.format(self.root, self.mode, choose_obj)
@@ -410,7 +386,7 @@ class Dataset(data.Dataset):
         num_patch = np.max(patches)
         num_list = []
         patch_list = patches.reshape(-1).tolist()
-        for n in range(1, num_patch + 1):  # ordered num of point in each patch(from patch_1 to patch_n)
+        for n in range(1, num_patch + 1):  # ordered num of point in each tless(from patch_1 to patch_n)
             num = str(patch_list).count(str(n))
             num_list.append(num)
 
@@ -448,9 +424,6 @@ class Dataset(data.Dataset):
                 target,
                 choose_patch]# mesh trans to camera(clouds) coordinate
 
-        # trans the pts to the right pose ===> ops: [pts_trans = pts - translation, pts_trans = pts_trans @ rotation]
-        # size of normalized mesh, return as NOCS does.
-        # scale the normalized mesh to the size of transformed pts (pts_trans)   ===> [ops: mesh = mesh * ratio]
 
     def re_scale(self, target_fr, target_to):
         ans_scale = target_fr / target_to
@@ -475,21 +448,14 @@ class Dataset(data.Dataset):
 
                 cloud, mesh, target_rt, target,choose_patch = self.get_frame(choose_frame[0], choose_obj,
                                                                                            syn_or_real)
-                # if np.max(abs(target_rt[:9])) > 1.0 or np.max(abs(target_rt[9:])) > 1.0:
-                #
-                #     continue
+
                 break
 
             except:
                 continue
 
         class_gt = np.array([cate_id - 1])
-        # if cate_id==1 or cate_id==2 or cate_id==4:
-        #     target_mode = 1
-        # elif cate_id==6:
-        #     target_mode = 2
-        # else:
-        #     target_mode = 0
+
         return torch.from_numpy(cloud.astype(np.float32)), \
                torch.from_numpy(mesh.astype(np.float32)), \
                torch.from_numpy(target_rt.astype(np.float32)), \
@@ -497,15 +463,6 @@ class Dataset(data.Dataset):
                torch.LongTensor(class_gt), \
                choose_patch
 
-        # torch.from_numpy(cloud.astype(np.float32)), \
-        # torch.from_numpy(target_rt.astype(np.float32)), \
-        # choose_triplet, \
-        # torch.from_numpy(target_pt.astype(np.float32)), \
-        # model_points[0], \
-        # torch.LongTensor([target_mode]), \
-        # torch.from_numpy(target_trans.astype(np.float32))
-        # torch.from_numpy(scale.astype(np.float32)), \
-        # torch.from_numpy(ratio.astype(np.float32))
 
     def __len__(self):
         return self.length
@@ -592,21 +549,3 @@ def search_fit(points):
 
     return [min_x, max_x, min_y, max_y, min_z, max_z]
 
-#
-# Usages:
-#
-# from dataset.dataset_nocs_for_ours import Dataset
-#
-# dataset = Dataset('train', opt.dataset_root, False, opt.num_points, opt.num_cates, 5000, opt.category)
-# dataloader = torch.utils.data.DataLoader(dataset, batch_size=1, shuffle=True, num_workers=opt.workers)
-# test_dataset = Dataset('val', opt.dataset_root, False, opt.num_points, opt.num_cates, 1000, opt.category)
-# testdataloader = torch.utils.data.DataLoader(test_dataset, batch_size=1, shuffle=True, num_workers=opt.workers)
-#
-#
-# for i, data in enumerate(dataloader, 0):
-#         cloud, mesh, target_r, target_t, scale = data
-#         cloud, mesh, target_r, target_t, scale = Variable(cloud).cuda(), \
-#                                                     Variable(mesh).cuda(), \
-#                                                     Variable(target_r).cuda(), \
-#                                                     Variable(target_t).cuda(), \
-#                                                     Variable(scale).cuda()

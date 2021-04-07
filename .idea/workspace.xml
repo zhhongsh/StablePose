@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="8d79cc08-b9db-411c-a610-168e7b0d59a5" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/datasets/linemod/dataset_config/lmo_test_list.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/datasets/linemod/dataset_config/new_train_lmo_ls.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/datasets/linemod/dataset_lmo_eval.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/loss_refiner.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/network_lmo.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/train_lmo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/linemod/dataset.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/nocs/data_generate.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/nocs/dataset_6pack.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/nocs/dataset_6pack_ours.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/nocs/dataset_nocs.py" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/nocs/dataset_nocs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/nocs/dataset_nocs_eval.py" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/nocs/dataset_nocs_eval.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/nocs/test/mesh.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/nocs/test/mesh_trans.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/nocs/test/pts.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/nocs/test/pts1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/nocs/test/pts_ori.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/patch/dataset_config/bop19_test.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/patch/dataset_config/bop_final_test_list.txt" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/tless/dataset_config/bop_final_test_list.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/patch/dataset_config/bop_real_test_list.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/patch/dataset_config/bop_train_list_1296.txt" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/tless/dataset_config/bop_train_list_1296.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/patch/dataset_config/generate_list.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/patch/dataset_config/pbr_part" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/patch/dataset_config/pbr_train_all.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/patch/dataset_config/test.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/patch/dataset_config/test_targets_bop19.json" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/tless/dataset_config/test_targets_bop19.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/patch/dataset_config/train_ours_part.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/patch/dataset_config/transfer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/patch/dataset_triplet.py" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/tless/dataset_triplet.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/patch/dataset_triplet_5.py" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/linemod/dataset_lmo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/shapenet/dataset_shapenet.py" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/shapenet/dataset_shapenet.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/shapenet/dataset_shapenet_eval.py" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/shapenet/dataset_shapenet_eval.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/network_nocs_nonorm.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/network_nocs_nonorm.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/network_point.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/network_point.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test-tless.py" beforeDir="false" afterPath="$PROJECT_DIR$/test-tless.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_nocs.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_nocs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_shapenet.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_shapenet.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/train_nocs.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_nocs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/train_shapenet.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_shapenet.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/train_tless.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_tless.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1qkA3CDD12Kex9GNSbwomq2PXnl" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/datasets" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\pose-estimation\stablepose\StablePose\datasets" />
+      <recent name="D:\pose-estimation\stablepose\StablePose\lib" />
+      <recent name="D:\pose-estimation\stablepose\StablePose" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.train_shapenet">
+    <configuration name="train_lmo" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="StablePose" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/train_lmo.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="train_nocs" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="StablePose" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/train_nocs.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="train_shapenet" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="StablePose" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/train_shapenet.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="train_tless" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="StablePose" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/train_tless.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.train_shapenet" />
+        <item itemvalue="Python.train_nocs" />
+        <item itemvalue="Python.train_tless" />
+        <item itemvalue="Python.train_lmo" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8d79cc08-b9db-411c-a610-168e7b0d59a5" name="Default Changelist" comment="" />
+      <created>1617613012323</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1617613012323</updated>
+      <workItem from="1617613029379" duration="21860000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="2176" y="26" key="#Deployment" timestamp="1617680222335">
+      <screen x="1920" y="0" width="1536" height="824" />
+    </state>
+    <state x="2176" y="26" key="#Deployment/0.0.1280.680/1920.0.1536.824@1920.0.1536.824" timestamp="1617680222335" />
+    <state x="2419" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1617786262454">
+      <screen x="1920" y="0" width="1536" height="824" />
+    </state>
+    <state x="2419" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1280.680/1920.0.1536.824@1920.0.1536.824" timestamp="1617786262454" />
+    <state width="1493" height="167" key="GridCell.Tab.0.bottom" timestamp="1617784143333">
+      <screen x="1920" y="0" width="1536" height="824" />
+    </state>
+    <state width="1237" height="260" key="GridCell.Tab.0.bottom/0.0.1280.680/1920.0.1536.824@0.0.1280.680" timestamp="1617771721689" />
+    <state width="1493" height="167" key="GridCell.Tab.0.bottom/0.0.1280.680/1920.0.1536.824@1920.0.1536.824" timestamp="1617784143333" />
+    <state width="1493" height="167" key="GridCell.Tab.0.center" timestamp="1617784143333">
+      <screen x="1920" y="0" width="1536" height="824" />
+    </state>
+    <state width="1237" height="260" key="GridCell.Tab.0.center/0.0.1280.680/1920.0.1536.824@0.0.1280.680" timestamp="1617771721689" />
+    <state width="1493" height="167" key="GridCell.Tab.0.center/0.0.1280.680/1920.0.1536.824@1920.0.1536.824" timestamp="1617784143333" />
+    <state width="1493" height="167" key="GridCell.Tab.0.left" timestamp="1617784143332">
+      <screen x="1920" y="0" width="1536" height="824" />
+    </state>
+    <state width="1237" height="260" key="GridCell.Tab.0.left/0.0.1280.680/1920.0.1536.824@0.0.1280.680" timestamp="1617771721689" />
+    <state width="1493" height="167" key="GridCell.Tab.0.left/0.0.1280.680/1920.0.1536.824@1920.0.1536.824" timestamp="1617784143332" />
+    <state width="1493" height="167" key="GridCell.Tab.0.right" timestamp="1617784143333">
+      <screen x="1920" y="0" width="1536" height="824" />
+    </state>
+    <state width="1237" height="260" key="GridCell.Tab.0.right/0.0.1280.680/1920.0.1536.824@0.0.1280.680" timestamp="1617771721689" />
+    <state width="1493" height="167" key="GridCell.Tab.0.right/0.0.1280.680/1920.0.1536.824@1920.0.1536.824" timestamp="1617784143333" />
+    <state width="1493" height="261" key="GridCell.Tab.1.bottom" timestamp="1617782005420">
+      <screen x="1920" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="261" key="GridCell.Tab.1.bottom/0.0.1280.680/1920.0.1536.824@1920.0.1536.824" timestamp="1617782005420" />
+    <state width="1493" height="261" key="GridCell.Tab.1.center" timestamp="1617782005420">
+      <screen x="1920" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="261" key="GridCell.Tab.1.center/0.0.1280.680/1920.0.1536.824@1920.0.1536.824" timestamp="1617782005420" />
+    <state width="1493" height="261" key="GridCell.Tab.1.left" timestamp="1617782005420">
+      <screen x="1920" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="261" key="GridCell.Tab.1.left/0.0.1280.680/1920.0.1536.824@1920.0.1536.824" timestamp="1617782005420" />
+    <state width="1493" height="261" key="GridCell.Tab.1.right" timestamp="1617782005420">
+      <screen x="1920" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="261" key="GridCell.Tab.1.right/0.0.1280.680/1920.0.1536.824@1920.0.1536.824" timestamp="1617782005420" />
+    <state x="2190" y="54" key="SettingsEditor" timestamp="1617680455774">
+      <screen x="1920" y="0" width="1536" height="824" />
+    </state>
+    <state x="2190" y="54" key="SettingsEditor/0.0.1280.680/1920.0.1536.824@1920.0.1536.824" timestamp="1617680455774" />
+    <state x="2783" y="76" width="673" height="538" key="ftp.server.browser" timestamp="1617680347104">
+      <screen x="1920" y="0" width="1536" height="824" />
+    </state>
+    <state x="2783" y="76" width="673" height="538" key="ftp.server.browser/0.0.1280.680/1920.0.1536.824@1920.0.1536.824" timestamp="1617680347104" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/datasets/shapenet/dataset_shapenet.py</url>
+          <line>153</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/datasets/shapenet/dataset_shapenet.py</url>
+          <line>130</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/datasets/shapenet/dataset_shapenet.py</url>
+          <line>221</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/datasets/shapenet/dataset_shapenet.py</url>
+          <line>132</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/datasets/shapenet/dataset_shapenet.py</url>
+          <line>134</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/datasets/shapenet/dataset_shapenet.py</url>
+          <line>135</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/StablePose$train_nocs.coverage" NAME="train_nocs Coverage Results" MODIFIED="1617783989567" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/StablePose$train_lmo.coverage" NAME="train_lmo Coverage Results" MODIFIED="1617782117175" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/StablePose$train_shapenet.coverage" NAME="train_shapenet Coverage Results" MODIFIED="1617784007868" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/StablePose$train_tless.coverage" NAME="train_tless Coverage Results" MODIFIED="1617783590932" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+  </component>
+</project>

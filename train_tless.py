@@ -7,22 +7,22 @@ import time
 import numpy as np
 import torch
 import sys
-sys.path.append('/home/lthpc/yifeis/pose/pose_est_tless_3d/')
+sys.path.append('/home/lthpc/yifeis/pose/StablePose/')
 # sys.path.append('/home/dell/yifeis/pose/pose_est_tless_3d/')
 import torch.nn.parallel
 import torch.optim as optim
 import torch.utils.data
 from torch.autograd import Variable
-from datasets.patch.dataset_triplet import PoseDataset as PoseDataset_ycb
-from datasets.linemod.dataset import PoseDataset as PoseDataset_linemod
+from datasets.tless.dataset_triplet import PoseDataset as PoseDataset_ycb
+from datasets.linemod.dataset_lmo import PoseDataset as PoseDataset_linemod
 from lib.network_point import PatchNet, PoseRefineNet
 from lib.loss_triplet_so import Loss
-from lib.loss_refiner import Loss_refine
+# from lib.loss_refiner import Loss_refine
 from lib.utils import setup_logger
 # os.environ['CUDA_LAUNCH_BLOCKING'] = "1"
 parser = argparse.ArgumentParser()
-parser.add_argument('--dataset', type=str, default='tless', help='tless or linemod')
-parser.add_argument('--dataset_root', type=str, default='/data/yifeis/pose/',
+parser.add_argument('--dataset', type=str, default='tless', help='tless or lmo')
+parser.add_argument('--dataset_root', type=str, default='/data2/yifeis/pose/',
                     help='dataset root dir (''YCB_Video_Dataset'' or ''Linemod_preprocessed'')')
 parser.add_argument('--batch_size', type=int, default=8, help='batch size')
 parser.add_argument('--workers', type=int, default=32, help='number of data loading workers')
@@ -43,7 +43,7 @@ opt = parser.parse_args()
 os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 # torch.backends.cudnn.enabled = True
 # torch.backends.cudnn.benchmark = True
-proj_dir = '/home/lthpc/yifeis/pose/pose_est_tless_3d/'
+proj_dir = '/home/lthpc/yifeis/pose/StablePose/'
 # proj_dir = '/home/dell/yifeis/pose/pose_est_tless_3d/'
 torch.set_num_threads(32)
 
@@ -56,11 +56,12 @@ def main():
     if opt.dataset == 'tless':
         opt.num_objects = 30  # number of object classes in the dataset
         opt.num_points = 2000  # number of points on the input pointcloud
-        opt.outf = proj_dir + 'trained_models/triplet/3_so_lthpc'  # folder to save trained models
-        opt.log_dir = proj_dir + 'experiments/logs/triplet/3_so_lthpc'  # folder to save logs
+        opt.outf = proj_dir + 'trained_models/tless'  # folder to save trained models
+        opt.log_dir = proj_dir + 'experiments/logs/tless'  # folder to save logs
         opt.repeat_epoch = 1  # number of repeat times for one epoch training
-    elif opt.dataset == 'linemod':
-        opt.num_objects = 15
+
+    elif opt.dataset == 'lmo':
+        opt.num_objects = 8
         opt.num_points = 1000
         opt.outf = proj_dir +'trained_models/linemod/'
         opt.log_dir =  proj_dir +'experiments/logs/linemod/'
@@ -101,14 +102,14 @@ def main():
 
     if opt.dataset == 'tless':
         dataset = PoseDataset_ycb('train', opt.num_points, False, opt.dataset_root, opt.noise_trans, opt.refine_start)
-    elif opt.dataset == 'linemod':
+    elif opt.dataset == 'lmo':
         dataset = PoseDataset_linemod('train', opt.num_points, False, opt.dataset_root, opt.noise_trans,
                                       opt.refine_start)
     dataloader = torch.utils.data.DataLoader(dataset, batch_size=1, shuffle=True, num_workers=opt.workers,
                                              pin_memory=True)
     if opt.dataset == 'tless':
         test_dataset = PoseDataset_ycb('test', opt.num_points, False, opt.dataset_root, 0.0, opt.refine_start)
-    elif opt.dataset == 'linemod':
+    elif opt.dataset == 'lmo':
         test_dataset = PoseDataset_linemod('test', opt.num_points, False, opt.dataset_root, 0.0, opt.refine_start)
     testdataloader = torch.utils.data.DataLoader(test_dataset, batch_size=1, shuffle=False, num_workers=opt.workers,
                                                  pin_memory=True)
@@ -124,7 +125,7 @@ def main():
             len(dataset), len(test_dataset), opt.num_points_mesh, opt.sym_list))
 
     criterion = Loss(opt.num_points_mesh, opt.sym_list,rot_list,ref_list,nosym_list)
-    criterion_refine = Loss_refine(opt.num_points_mesh, opt.sym_list)
+    # criterion_refine = Loss_refine(opt.num_points_mesh, opt.sym_list)
 
     best_test = np.Inf
     st_time = time.time()
@@ -149,8 +150,7 @@ def main():
             for i, data in enumerate(dataloader, 0):
                 points, choose, img, target_rt,target_trans, idx, \
                 choose_patchs,target_pt,model_points,normals,model_info,model_axis,_,_ = data
-                # if idx[0].item() not in ref_list:
-                #     continue
+
                 points, choose, img, target_rt, target_trans,idx,\
                 target_pt, model_points,normals,model_axis = Variable(points).cuda(), \
                                                  Variable(choose).cuda(), \
@@ -260,7 +260,7 @@ def main():
         test_dis = test_dis / test_count
         test_norm = test_norm / test_count
         test_patch = test_patch / test_count
-        logger.info('Test time {0} Epoch {1} TEST FINISH Avg dis: {2} avg norm: {3} avg patch: {4}'.format(
+        logger.info('Test time {0} Epoch {1} TEST FINISH Avg dis: {2} avg norm: {3} avg tless: {4}'.format(
             time.strftime("%Hh %Mm %Ss", time.gmtime(time.time() - st_time)), epoch, test_dis, test_norm, test_patch))
         if test_dis <= best_test:
             best_test = test_dis
@@ -281,16 +281,16 @@ def main():
             opt.batch_size = int(opt.batch_size / opt.iteration)
             optimizer = optim.Adam(refiner.parameters(), lr=opt.lr)
 
-            if opt.dataset == 'ycb':
+            if opt.dataset == 'tless':
                 dataset = PoseDataset_ycb('train', opt.num_points, True, opt.dataset_root, opt.noise_trans,
                                           opt.refine_start)
-            elif opt.dataset == 'linemod':
+            elif opt.dataset == 'lmo':
                 dataset = PoseDataset_linemod('train', opt.num_points, True, opt.dataset_root, opt.noise_trans,
                                               opt.refine_start)
             dataloader = torch.utils.data.DataLoader(dataset, batch_size=1, shuffle=True, num_workers=opt.workers)
-            if opt.dataset == 'ycb':
+            if opt.dataset == 'tless':
                 test_dataset = PoseDataset_ycb('test', opt.num_points, False, opt.dataset_root, 0.0, opt.refine_start)
-            elif opt.dataset == 'linemod':
+            elif opt.dataset == 'lmo':
                 test_dataset = PoseDataset_linemod('test', opt.num_points, False, opt.dataset_root, 0.0,
                                                    opt.refine_start)
             testdataloader = torch.utils.data.DataLoader(test_dataset, batch_size=1, shuffle=False,
@@ -304,18 +304,16 @@ def main():
                     len(dataset), len(test_dataset), opt.num_points_mesh, opt.sym_list))
 
             criterion = Loss(opt.num_points_mesh, opt.sym_list)
-            criterion_refine = Loss_refine(opt.num_points_mesh, opt.sym_list)
+            # criterion_refine = Loss_refine(opt.num_points_mesh, opt.sym_list)
 
 def displayPoint(data,target,view,title):
-    # 解决中文显示问题
     import matplotlib.pyplot as plt
     from mpl_toolkits.mplot3d import Axes3D
     plt.rcParams['axes.unicode_minus'] = False
-    # 点数量太多不予显示
+
     while len(data[0]) > 20000:
         print("too much point")
         exit()
-    # 散点图参数设置
     fig = plt.figure()
     ax = Axes3D(fig)
     ax.set_title(title)
