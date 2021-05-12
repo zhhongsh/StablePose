@@ -35,6 +35,7 @@ To train StablePose on LMO dataset, run
 python train_lmo.py
 ```
 
+
 To evaluate instace-level datasets: T-LESS and LMO, use the code here https://github.com/thodan/bop_toolkit.  
 
 To test StablePose on T-LESS dataset, run 
@@ -46,6 +47,7 @@ To test/evaluate StablePose on LMO dataset, run
 python test_lmo.py
 ```
 The above scripts will create the required csv files in https://github.com/thodan/bop_toolkit.
+
 
 
 To test/evaluate StablePose on NOCS-REAL275 dataset, run 
