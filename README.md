@@ -22,18 +22,9 @@ This repository includes:
   ** datasets/nocs/dataset_eval.py: the evaluation dataloader for nocs dataset  
   ** datasets/nocs/dataset_config/*.txt: training and testing splits for nocs dataset
 
-To train StablePose on T-LESS or LM-O dataset, run
+To train StablePose on T-LESS dataset, run
 ```
-python train.py -tless
-```
-or 
-```
-train.py -lmo
-```
-
-To train StablePose on ShapeNet dataset, run 
-```
-python train_shapenet.py
+python train_tless.py -tless
 ```
 
 To train StablePose on NOCS-REAL275 dataset, run 
@@ -44,10 +35,6 @@ python train_nocs.py
 To test StablePose on T-LESS dataset, run 
 ```
 python test_tless.py
-``` 
-To test/evaluate StablePose on ShapeNet dataset, run 
-```
-python test_shapenet.py
 ```   
 To test/evaluate StablePose on NOCS-REAL275 dataset, run 
 ```
