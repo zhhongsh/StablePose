@@ -6,7 +6,6 @@ import time
 import numpy as np
 import torch
 import sys
-sys.path.append('/home/dell/yifeis/pose/pose_est_tless_3d/')
 import torch.nn.parallel
 import torch.optim as optim
 import torch.utils.data
@@ -38,9 +37,7 @@ parser.add_argument('--resume_refinenet', type=str, default='', help='resume Pos
 parser.add_argument('--start_epoch', type=int, default=1, help='which epoch to start')
 opt = parser.parse_args()
 os.environ['CUDA_VISIBLE_DEVICES'] = '1'
-# CUDA_LAUNCH_BLOCKING=1
-# proj_dir='/home/lthpc/yifeis/pose_mount/pose_est_tless_3d/'
-proj_dir = '/home/dell/yifeis/pose/pose_est_tless_3d/'
+proj_dir = os.getcwd()+'/'
 cls_id_ls = [1,5,6,8,9,10,11,12]
 # proj_dir = '/home/demian/pose_est_tless/'
 def main():
