@@ -48,4 +48,4 @@ To test/evaluate StablePose on LMO dataset, run
 python test_lmo.py
 ```
 
-To evaluate instace-level datasets: T-LESS and Linemod, use the code here https://github.com/thodan/bop_toolkit.  
+To evaluate instace-level datasets: T-LESS and LMO, use the code here https://github.com/thodan/bop_toolkit.  
