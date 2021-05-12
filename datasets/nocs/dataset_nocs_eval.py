@@ -595,21 +595,3 @@ def search_fit(points):
 
     return [min_x, max_x, min_y, max_y, min_z, max_z]
 
-#
-# Usages:
-#
-# from dataset.dataset_nocs_for_ours import Dataset
-#
-# dataset = Dataset('train', opt.dataset_root, False, opt.num_points, opt.num_cates, 5000, opt.category)
-# dataloader = torch.utils.data.DataLoader(dataset, batch_size=1, shuffle=True, num_workers=opt.workers)
-# test_dataset = Dataset('val', opt.dataset_root, False, opt.num_points, opt.num_cates, 1000, opt.category)
-# testdataloader = torch.utils.data.DataLoader(test_dataset, batch_size=1, shuffle=True, num_workers=opt.workers)
-#
-#
-# for i, data in enumerate(dataloader, 0):
-#         cloud, mesh, target_r, target_t, scale = data
-#         cloud, mesh, target_r, target_t, scale = Variable(cloud).cuda(), \
-#                                                     Variable(mesh).cuda(), \
-#                                                     Variable(target_r).cuda(), \
-#                                                     Variable(target_t).cuda(), \
-#                                                     Variable(scale).cuda()

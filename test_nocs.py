@@ -6,24 +6,20 @@ import time
 import numpy as np
 import torch
 import sys
-sys.path.append('/home/lthpc/yifeis/pose/pose_est_tless_3d/')
-# sys.path.append('/home/dell/yifeis/pose/pose_est_tless_3d/')
+# sys.path.append('/home/lthpc/yifeis/pose/StablePose/')
 import torch.nn.parallel
 import torch.optim as optim
 import torch.utils.data
 from torch.autograd import Variable
 from datasets.nocs.dataset_nocs_eval import Dataset
-from datasets.linemod.dataset_lmo import PoseDataset as PoseDataset_linemod
-from lib.network_nocs_nonorm import PatchNet
+from lib.network_nocs import PatchNet
 from lib.loss_nocs import Loss
-from lib.loss_refiner import Loss_refine
-from lib.utils import setup_logger
 import open3d as o3d
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--dataset', type=str, default='nocs', help='tless or linemod')
-parser.add_argument('--dataset_root', type=str, default='/data/yifeis/pose/NOCS/NOCS-REAL275-additional/',
-                    help='dataset root dir (''YCB_Video_Dataset'' or ''Linemod_preprocessed'')')
+parser.add_argument('--dataset', type=str, default='nocs')
+parser.add_argument('--dataset_root', type=str, default='/data2/yifeis/pose/data_release/NOCS-REAL275-additional/',
+                    help='dataset root dir')
 parser.add_argument('--batch_size', type=int, default=8, help='batch size')
 parser.add_argument('--workers', type=int, default=32, help='number of data loading workers')
 parser.add_argument('--lr', default=0.00005, help='learning rate')
@@ -36,13 +32,13 @@ parser.add_argument('--noise_trans', default=0.03,
                     help='range of the random noise of translation added to the training data')
 parser.add_argument('--iteration', type=int, default=2, help='number of refinement iterations')
 parser.add_argument('--nepoch', type=int, default=500, help='max numbesr of epochs to train')
-parser.add_argument('--resume_posenet', type=str, default='pose_model_23_0.09750169439241291.pth', help='resume PoseNet model')#pose_model_7_0.1031530118677765.pth,pose_model_18_0.10158068922534585.pth
+parser.add_argument('--resume_posenet', type=str, default='model_nocs.pth', help='resume PoseNet model')#pose_model_7_0.1031530118677765.pth,pose_model_18_0.10158068922534585.pth
 parser.add_argument('--resume_refinenet', type=str, default='', help='resume PoseRefineNet model')
 parser.add_argument('--start_epoch', type=int, default=1, help='which epoch to start')
 opt = parser.parse_args()
 os.environ['CUDA_VISIBLE_DEVICES'] = '1'
-proj_dir = '/home/lthpc/yifeis/pose/pose_est_tless_3d/'
-# proj_dir = '/home/dell/yifeis/pose/pose_est_tless_3d/'
+# proj_dir = '/home/lthpc/yifeis/pose/StablePose/'
+proj_dir = os.getcwd()+'/'
 torch.set_num_threads(32)
 
 def main():
@@ -53,20 +49,13 @@ def main():
     if opt.dataset == 'nocs':
         opt.num_objects = 6  # number of object classes in the dataset
         opt.num_points = 2000  # number of points on the input pointcloud
-        opt.outf = proj_dir + 'trained_models/nocs_nonorm/'  # folder to save trained models
-        opt.log_dir = proj_dir + 'experiments/logs/nocs_nonorm/'  # folder to save logs
+        opt.outf = proj_dir + 'trained_models/nocs/'  # folder to save trained models
+        opt.log_dir = proj_dir + 'experiments/logs/nocs/'  # folder to save logs
         opt.repeat_epoch = 1  # number of repeat times for one epoch training
-    elif opt.dataset == 'linemod':
-        opt.num_objects = 15
-        opt.num_points = 1000
-        opt.outf = proj_dir +'trained_models/linemod/'
-        opt.log_dir =  proj_dir +'experiments/logs/linemod/'
-        opt.repeat_epoch = 2
     else:
         print('Unknown dataset')
         return
 
-    # torch.distributed.init_process_group(backend='nccl', init_method='tcp://localhost:23456', rank=0, world_size=1)
     estimator = PatchNet()
     # estimator = torch.nn.DataParallel(estimator)
     estimator = estimator.cuda()
@@ -217,11 +206,9 @@ def main():
 
 
 def displayPoint(data,target,view,title):
-    # 解决中文显示问题
     import matplotlib.pyplot as plt
     from mpl_toolkits.mplot3d import Axes3D
     plt.rcParams['axes.unicode_minus'] = False
-    # 点数量太多不予显示
     while len(data[0]) > 20000:
         print("too much point")
         exit()
@@ -330,49 +317,4 @@ def icp(model,pred,view_point,trans_init):
 
 if __name__ == '__main__':
     main()
-#     num_ls = [173,167,185,157,169,158]
-#     print('total_num=',np.sum(num_ls))
-#     bottle=[]
-#     bowl=[]
-#     camera=[]
-#     can=[]
-#     laptop=[]
-#     mug=[]
-#     for i in num_ls:
-#         for j in range(130,i+1):
-#             k = j/(i+1)
-#             id = num_ls.index(i)
-#             if id==0:
-#                 bottle.append(k)
-#             elif id==1:
-#                 bowl.append(k)
-#             elif id==2:
-#                 camera.append(k)
-#             elif id==3:
-#                 can.append(k)
-#             elif id==4:
-#                 laptop.append(k)
-#             elif id==5:
-#                 mug.append(k)
-#     print('bottle',bottle[-20:],'\n',
-#                 'bowl',bowl[-20:],'\n',
-#                 'camera',camera[-30:],'\n',
-#                 'can',can[-20:],'\n',
-#                 'laptop',laptop[-20:],'\n',
-#                 'mug',mug[-20:])
-# iou_ls = []
-
-
-# result1: model 18
-# 1000 points
-# fit before 0.3+
-# fit after 0.5+
-# result2: model 18
-# 2000 points
-# mean_t_error1: 0.06330418
-# mean_t_error2: 0.05324653400652079
-# result3: model 23
-# 1000 points
-
-
 

@@ -75,7 +75,8 @@ class Dataset(data.Dataset):
 
 
         self.mesh = []
-        input_file = open('/home/lthpc/yifeis/pose/pose_est_tless_3d/datasets/nocs/sphere.xyz', 'r')
+        proj_dir = os.getcwd()
+        input_file = open(proj_dir+'/datasets/nocs/sphere.xyz', 'r')
         while 1:
             input_line = input_file.readline()
             if not input_line:
@@ -361,9 +362,6 @@ class Dataset(data.Dataset):
         pt1 = (xmap_masked - cam_cy) * pt2 / cam_fy
         cloud = np.concatenate((-pt0, -pt1, pt2), axis=1)
 
-        # np.savetxt('/home/lthpc/yifeis/pose/pose_est_tless_3d/datasets/nocs/test/pts.txt', pts)
-        # np.savetxt('/home/lthpc/yifeis/pose/pose_est_tless_3d/datasets/nocs/test/pts_ori.txt', cloud)
-
         # get the mesh of normalized model
         mesh_path = '{0}/obj_models/real_{1}/{2}.obj'.format(self.root, self.mode, choose_obj)
         # mesh = o3d.io.read_triangle_mesh(mesh_path)
@@ -372,15 +370,6 @@ class Dataset(data.Dataset):
         model_mesh = Meshes(verts=[verts], faces=[faces.verts_idx])
         mesh = sample_points_from_meshes(model_mesh, 2000)
         target = np.dot(mesh[0], target_r.T) + translation
-        # np.savetxt('/home/lthpc/yifeis/pose/pose_est_tless_3d/datasets/nocs/test/mesh.txt', mesh[0])
-        # np.savetxt('/home/lthpc/yifeis/pose/pose_est_tless_3d/datasets/nocs/test/mesh_trans.txt', target)
-
-        # get the bbox of model
-        # input_file = '{0}/obj_models/real_{1}/{2}.txt'.format(self.root, self.mode, choose_obj)
-        # scale_ori = np.loadtxt(input_file, dtype=np.float)
-        # scale_factor = scale_ori / np.linalg.norm(scale_ori)
-        # scale = scale_ori
-        # scale = scale_factor / 2
 
         patches = patch_masked.astype(int)
         num_patch = np.max(patches)

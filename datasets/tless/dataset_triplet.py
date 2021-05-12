@@ -6,33 +6,28 @@ import os.path
 import torch
 import numpy as np
 import torchvision.transforms as transforms
-import argparse
-import time
 import random
 import numpy.ma as ma
-import scipy.misc
-import scipy.io as scio
-import yaml
 import json
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import open3d as o3d
 import heapq
-proj_dir = '/home/lthpc/yifeis/pose/StablePose/'
-# proj_dir = '/home/dell/yifeis/pose/pose_est_tless_3d/'
+proj_dir = os.getcwd()
+
 class PoseDataset(data.Dataset):
     def __init__(self, mode, num_pt, add_noise, root, noise_trans, refine):
         if mode == 'train':
             self.mode = 'train'
-            self.path = proj_dir + 'datasets/tless/dataset_config/bop_train_list_1296.txt'
+            self.path = proj_dir + '/datasets/tless/dataset_config/bop_train_list.txt'
         elif mode == 'test':
             self.mode = 'test'
-            self.path = proj_dir + 'datasets/tless/dataset_config/bop_final_test_list.txt'
+            self.path = proj_dir + '/datasets/tless/dataset_config/bop_final_test_list.txt'
         self.num_pt = num_pt
         self.root = root
         self.add_noise = add_noise
         self.noise_trans = noise_trans
-        self.model_root = '/home/lthpc/yifeis/pose_mount/tless/'
+        self.model_root = self.root
         # self.model_root = '/home/dell/yifeis/pose/bop2020/tless/'
         self.list = []
         # self.real = []
@@ -540,13 +535,10 @@ def get_bbox(label):
 
 
 def displayPoint(data,target,title):
-    # 解决中文显示问题
     plt.rcParams['axes.unicode_minus'] = False
-    # 点数量太多不予显示
     while len(data[0]) > 50000:
         print("too much point")
         exit()
-    # 散点图参数设置
     fig = plt.figure()
     ax = Axes3D(fig)
     ax.set_title(title)

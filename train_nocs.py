@@ -5,24 +5,20 @@ import random
 import time
 import numpy as np
 import torch
-import sys
-sys.path.append('/home/lthpc/yifeis/pose/pose_est_tless_3d/')
-# sys.path.append('/home/dell/yifeis/pose/pose_est_tless_3d/')
 import torch.nn.parallel
 import torch.optim as optim
 import torch.utils.data
 from torch.autograd import Variable
 from datasets.nocs.dataset_nocs import Dataset
-from datasets.linemod.dataset_lmo import PoseDataset as PoseDataset_linemod
-from lib.network_nocs_nonorm import PatchNet
+from lib.network_nocs import PatchNet
 from lib.loss_nocs import Loss
-# from lib.loss_refiner import Loss_refine
+
 from lib.utils import setup_logger
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--dataset', type=str, default='nocs', help='tless or linemod')
-parser.add_argument('--dataset_root', type=str, default='/data2/yifeis/pose/NOCS/NOCS-REAL275-additional/',
-                    help='dataset root dir (''YCB_Video_Dataset'' or ''Linemod_preprocessed'')')
+parser.add_argument('--dataset', type=str, default='nocs')
+parser.add_argument('--dataset_root', type=str, default='/data2/yifeis/pose/data_release/NOCS-REAL275-additional/',
+                    help='dataset root dir')
 parser.add_argument('--batch_size', type=int, default=8, help='batch size')
 parser.add_argument('--workers', type=int, default=32, help='number of data loading workers')
 parser.add_argument('--lr', default=0.00005, help='learning rate')
@@ -40,8 +36,8 @@ parser.add_argument('--resume_refinenet', type=str, default='', help='resume Pos
 parser.add_argument('--start_epoch', type=int, default=1, help='which epoch to start')
 opt = parser.parse_args()
 os.environ['CUDA_VISIBLE_DEVICES'] = '1'
-proj_dir = '/home/lthpc/yifeis/pose/pose_est_tless_3d/'
-# proj_dir = '/home/dell/yifeis/pose/pose_est_tless_3d/'
+# proj_dir = '/home/lthpc/yifeis/pose/StablePose/'
+proj_dir = os.getcwd()
 torch.set_num_threads(32)
 
 def main():
@@ -52,15 +48,9 @@ def main():
     if opt.dataset == 'nocs':
         opt.num_objects = 6  # number of object classes in the dataset
         opt.num_points = 2000  # number of points on the input pointcloud
-        opt.outf = proj_dir + 'trained_models/nocs_nonorm/'  # folder to save trained models
-        opt.log_dir = proj_dir + 'experiments/logs/nocs_nonorm/'  # folder to save logs
+        opt.outf = proj_dir + '/trained_models/nocs/'  # folder to save trained models
+        opt.log_dir = proj_dir + '/experiments/logs/nocs/'  # folder to save logs
         opt.repeat_epoch = 1  # number of repeat times for one epoch training
-    elif opt.dataset == 'linemod':
-        opt.num_objects = 15
-        opt.num_points = 1000
-        opt.outf = proj_dir +'trained_models/linemod/'
-        opt.log_dir =  proj_dir +'experiments/logs/linemod/'
-        opt.repeat_epoch = 2
     else:
         print('Unknown dataset')
         return
@@ -76,10 +66,7 @@ def main():
     total_trainable_params = sum(
         p.numel() for p in estimator.parameters() if p.requires_grad)
     print(f'{total_trainable_params:,} training parameters.')
-    # print(estimator)
-    # refiner = PoseRefineNet(num_points=opt.num_points, num_obj=opt.num_objects)
-    # refiner.cuda()
-    # utils.print_network(estimator)
+
 
     optimizer = optim.Adam(estimator.parameters(), lr=opt.lr, weight_decay=0.01)
 
@@ -126,7 +113,6 @@ def main():
                                                                                 points, idx,
                                                                                 target_pt, model_points,
                                                                                 )
-
                 loss.backward()
 
                 torch.cuda.empty_cache()
@@ -204,17 +190,6 @@ def main():
             opt.w *= opt.w_rate
             optimizer = optim.Adam(estimator.parameters(), lr=opt.lr)
 
-        # if best_test < opt.refine_margin and not opt.refine_start:
-        #     opt.refine_start = True
-        #     opt.batch_size = int(opt.batch_size / opt.iteration)
-        #     optimizer = optim.Adam(refiner.parameters(), lr=opt.lr)
-        #
-        #     dataset = Dataset('train', opt.dataset_root, False, opt.num_points, opt.num_cates, 5000, opt.category)
-        #     dataloader = torch.utils.data.DataLoader(dataset, batch_size=1, shuffle=True, num_workers=opt.workers)
-        #     test_dataset = Dataset('val', opt.dataset_root, False, opt.num_points, opt.num_cates, 1000, opt.category)
-        #     testdataloader = torch.utils.data.DataLoader(test_dataset, batch_size=1, shuffle=True,
-        #                                                  num_workers=opt.workers)
-
             # opt.sym_list = dataset.get_sym_list()
             opt.num_points_mesh = dataset.get_num_points_mesh()
 
@@ -226,15 +201,14 @@ def main():
             # criterion_refine = Loss_refine(opt.num_points_mesh)
 
 def displayPoint(data,target,view,title):
-    # 解决中文显示问题
+
     import matplotlib.pyplot as plt
     from mpl_toolkits.mplot3d import Axes3D
     plt.rcParams['axes.unicode_minus'] = False
-    # 点数量太多不予显示
+
     while len(data[0]) > 20000:
         print("too much point")
         exit()
-    # 散点图参数设置
     fig = plt.figure()
     ax = Axes3D(fig)
     ax.set_title(title)

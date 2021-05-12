@@ -1,4 +1,3 @@
-# dataloader of augmented original t-less dataset
 import torch.utils.data as data
 from PIL import Image
 import os
@@ -6,21 +5,14 @@ import os.path
 import torch
 import numpy as np
 import torchvision.transforms as transforms
-import argparse
-import time
 import random
-# from lib.transformations import quaternion_from_euler, euler_matrix, random_quaternion, quaternion_matrix
 import numpy.ma as ma
-import scipy.misc
-import scipy.io as scio
-import yaml
 import json
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import open3d as o3d
-from itertools import combinations
-# proj_dir = '/home/lthpc/yifeis/pose_mount/pose_est_tless/'
-proj_dir = '/home/dell/yifeis/pose/pose_est_tless_3d/'
+
+proj_dir = os.getcwd()+'/'
 class PoseDataset(data.Dataset):
     def __init__(self, mode, num_pt, add_noise, root, noise_trans, refine):
         if mode == 'train':
@@ -33,8 +25,7 @@ class PoseDataset(data.Dataset):
         self.root = root
         self.add_noise = add_noise
         self.noise_trans = noise_trans
-        # self.model_root = '/home/lthpc/yifeis/pose_mount/bop2020/tless/'
-        self.model_root = '/home/dell/yifeis/pose/bop_datasets/linemod/lmo'
+        self.model_root = root
         self.list = []
         # self.real = []
         self.syn = []
@@ -517,13 +508,10 @@ def get_bbox(label):
 
 
 def displayPoint(data,target,title):
-    # 解决中文显示问题
     plt.rcParams['axes.unicode_minus'] = False
-    # 点数量太多不予显示
     while len(data[0]) > 50000:
         print("too much point")
         exit()
-    # 散点图参数设置
     fig = plt.figure()
     ax = Axes3D(fig)
     ax.set_title(title)
