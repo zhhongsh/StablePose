@@ -26,10 +26,13 @@ To train StablePose on T-LESS dataset, run
 ```
 python train_tless.py -tless
 ```
-
 To train StablePose on NOCS-REAL275 dataset, run 
 ```
 python train_nocs.py
+```
+To train StablePose on LMO dataset, run 
+```
+python train_lmo.py
 ```
 
 To test StablePose on T-LESS dataset, run 
@@ -40,6 +43,9 @@ To test/evaluate StablePose on NOCS-REAL275 dataset, run
 ```
 python test_nocs.py
 ```
-
+To test/evaluate StablePose on LMO dataset, run 
+```
+python test_lmo.py
+```
 
 To evaluate instace-level datasets: T-LESS and Linemod, use the code here https://github.com/thodan/bop_toolkit.  
