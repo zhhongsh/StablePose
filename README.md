@@ -1,4 +1,9 @@
 # StablePose
+StablePose: Learning 6D Object Poses from Geometrically Stable Patches
+
+CVPR 2021
+
+Created by Yifei Shi, Junwen Huang, Xin Xu, Yifan Zhang and Kai Xu
 
 This repository includes:  
 * lib: the core Python library for networks and loss  
@@ -54,3 +59,6 @@ To test/evaluate StablePose on NOCS-REAL275 dataset, run
 ```
 python test_nocs.py
 ```
+
+## Pretrained model & data download
+The pretrained models and data can be found at [here](https://pan.baidu.com/s/1PxvpoZCOIjndFwHT7E94Hw ) (baidu yunpan, password: qde4) and [here](https://pan.baidu.com/s/16NFR9gSj2f5p7rtaD7xeuw) (baidu yunpan, password: cqqx).
