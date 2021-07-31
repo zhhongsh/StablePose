@@ -61,4 +61,4 @@ python test_nocs.py
 ```
 
 ## Pretrained model & data download
-The pretrained models and data can be found at [here](https://pan.baidu.com/s/1PxvpoZCOIjndFwHT7E94Hw ) (baidu yunpan, password: qde4) and [here](https://pan.baidu.com/s/16NFR9gSj2f5p7rtaD7xeuw) (baidu yunpan, password: cqqx).
+The pretrained models and data can be found at [here](https://pan.baidu.com/s/1cbRP2dgv4opkgmk8UUVbWQ) (baidu yunpan, password: qde4) and [here](https://pan.baidu.com/s/1q6wM21l5IM2zs8KsmDRzIg) (baidu yunpan, password: cqqx).
